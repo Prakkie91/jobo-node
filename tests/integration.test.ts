@@ -81,7 +81,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
   describe("getExpiredJobIds", () => {
     it("returns response without throwing", async () => {
       const response = await client.getExpiredJobIds({
-        expiredSince: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        expiredSince: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
         batchSize: 5,
       });
 
