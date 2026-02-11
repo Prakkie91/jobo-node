@@ -1,7 +1,7 @@
 {
   "name": "jobo-enterprise",
   "version": "1.0.0",
-  "description": "Official Node.js/TypeScript client for the Jobo Enterprise Jobs API",
+  "description": "Official Node.js/TypeScript client for the Jobo Enterprise Jobs API. Access millions of job listings from 45+ ATS platforms — Greenhouse, Lever, Workday, iCIMS, SmartRecruiters, and more. Build job boards, aggregators, and recruitment tools.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -26,17 +26,31 @@
     "ats",
     "greenhouse",
     "lever",
-    "workday"
+    "workday",
+    "smartrecruiters",
+    "ashby",
+    "bamboohr",
+    "icims",
+    "job-scraper",
+    "job-listings",
+    "job-data",
+    "job-aggregator",
+    "job-feed",
+    "applicant-tracking-system",
+    "hiring",
+    "careers-page",
+    "job-search-api",
+    "bulk-jobs"
   ],
-  "author": "Jobo AI <support@jobo.ai>",
+  "author": "Jobo <support@jobo.world>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jobo-ai/jobo-node.git"
+    "url": "https://github.com/Prakkie91/jobo-node.git"
   },
-  "homepage": "https://github.com/jobo-ai/jobo-node#readme",
+  "homepage": "https://jobo.world/enterprise/",
   "bugs": {
-    "url": "https://github.com/jobo-ai/jobo-node/issues"
+    "url": "https://github.com/Prakkie91/jobo-node/issues"
   },
   "engines": {
     "node": ">=18.0.0"

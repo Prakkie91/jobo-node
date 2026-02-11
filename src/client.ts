@@ -15,14 +15,14 @@ import type {
   LocationFilter,
 } from "./models";
 
-const DEFAULT_BASE_URL = "https://api.jobo.ai";
+const DEFAULT_BASE_URL = "https://jobs-api.jobo.world";
 const DEFAULT_TIMEOUT = 30_000;
 const USER_AGENT = "jobo-node/1.0.0";
 
 export interface JoboClientOptions {
   /** Your Jobo Enterprise API key. */
   apiKey: string;
-  /** API base URL. Defaults to `https://api.jobo.ai`. */
+  /** API base URL. Defaults to `https://jobs-api.jobo.world`. */
   baseUrl?: string;
   /** Request timeout in milliseconds. Defaults to 30000. */
   timeout?: number;
