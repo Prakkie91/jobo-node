@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.tgz
+.env
+.env.*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Testing
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
