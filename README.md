@@ -1,19 +1,13 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Prakkie91/jobo-node/main/jobo-logo.png" alt="Jobo" width="120" />
-</p>
+<img src="https://raw.githubusercontent.com/Prakkie91/jobo-node/main/jobo-logo.png" alt="Jobo" width="120" />
 
-<h1 align="center">Jobo Enterprise — Node.js / TypeScript Client</h1>
+# Jobo Enterprise — Node.js / TypeScript Client
 
-<p align="center">
-  <strong>Access millions of job listings from 45+ ATS platforms with a single API.</strong><br/>
-  Build job boards, power job aggregators, or sync ATS data — Greenhouse, Lever, Workday, iCIMS, and more.
-</p>
+**Access millions of job listings from 45+ ATS platforms with a single API.**  
+Build job boards, power job aggregators, or sync ATS data — Greenhouse, Lever, Workday, iCIMS, and more.
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/jobo-enterprise"><img src="https://img.shields.io/npm/v/jobo-enterprise" alt="npm" /></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.4+-blue" alt="TypeScript" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
-</p>
+[![npm](https://img.shields.io/npm/v/jobo-enterprise)](https://www.npmjs.com/package/jobo-enterprise)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-blue)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 ---
 
