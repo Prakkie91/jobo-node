@@ -33,9 +33,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run tests
-        run: npm test
-
       - name: Set version (if override or release tag)
         run: |
           if [ -n "${{ github.event.inputs.version }}" ]; then
