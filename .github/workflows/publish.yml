@@ -59,10 +59,10 @@ jobs:
       - name: Set version (if override or release tag)
         run: |
           if [ -n "${{ github.event.inputs.version }}" ]; then
-            npm version "${{ github.event.inputs.version }}" --no-git-tag-version
+            npm version "${{ github.event.inputs.version }}" --no-git-tag-version --allow-same-version
           elif [ "${{ github.event_name }}" = "release" ]; then
             TAG="${{ github.event.release.tag_name }}"
-            npm version "${TAG#v}" --no-git-tag-version
+            npm version "${TAG#v}" --no-git-tag-version --allow-same-version
           fi
 
       - name: Publish to npm
