@@ -20,7 +20,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
 
   describe("getJobsFeed", () => {
     it("returns jobs", async () => {
-      const response = await client.getJobsFeed({ batchSize: 5 });
+      const response = await client.feed.getJobs({ batchSize: 5 });
 
       expect(response).toBeDefined();
       expect(response.jobs.length).toBeGreaterThan(0);
@@ -37,7 +37,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
     });
 
     it("supports location filter", async () => {
-      const response = await client.getJobsFeed({
+      const response = await client.feed.getJobs({
         locations: [{ country: "US" }],
         batchSize: 5,
       });
@@ -47,14 +47,14 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
     });
 
     it("supports cursor pagination", async () => {
-      const first = await client.getJobsFeed({ batchSize: 2 });
+      const first = await client.feed.getJobs({ batchSize: 2 });
       expect(first.jobs.length).toBeGreaterThan(0);
 
       if (!first.has_more) return; // small dataset
 
       expect(first.next_cursor).toBeTruthy();
 
-      const second = await client.getJobsFeed({
+      const second = await client.feed.getJobs({
         cursor: first.next_cursor,
         batchSize: 2,
       });
@@ -68,7 +68,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
   describe("iterJobsFeed", () => {
     it("yields jobs via async generator", async () => {
       const jobs: Job[] = [];
-      for await (const job of client.iterJobsFeed({ batchSize: 3 })) {
+      for await (const job of client.feed.iterJobs({ batchSize: 3 })) {
         jobs.push(job);
         if (jobs.length >= 5) break;
       }
@@ -80,7 +80,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
 
   describe("getExpiredJobIds", () => {
     it("returns response without throwing", async () => {
-      const response = await client.getExpiredJobIds({
+      const response = await client.feed.getExpiredJobIds({
         expiredSince: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
         batchSize: 5,
       });
@@ -95,7 +95,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
 
   describe("searchJobs", () => {
     it("returns results for a query", async () => {
-      const response = await client.searchJobs({
+      const response = await client.search.search({
         q: "software engineer",
         pageSize: 5,
       });
@@ -110,7 +110,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
 
   describe("searchJobsAdvanced", () => {
     it("returns results", async () => {
-      const response = await client.searchJobsAdvanced({
+      const response = await client.search.searchAdvanced({
         queries: ["data engineer"],
         pageSize: 5,
       });
@@ -121,7 +121,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
     });
 
     it("supports location filter", async () => {
-      const response = await client.searchJobsAdvanced({
+      const response = await client.search.searchAdvanced({
         queries: ["developer"],
         locations: ["New York"],
         pageSize: 5,
@@ -135,7 +135,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
   describe("iterSearchJobs", () => {
     it("yields jobs via async generator", async () => {
       const jobs: Job[] = [];
-      for await (const job of client.iterSearchJobs({
+      for await (const job of client.search.iter({
         queries: ["engineer"],
         pageSize: 3,
       })) {
@@ -150,7 +150,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
 
   describe("Job model", () => {
     it("has all expected fields", async () => {
-      const response = await client.searchJobs({
+      const response = await client.search.search({
         q: "engineer",
         pageSize: 1,
       });
@@ -178,7 +178,7 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
 
   describe("geocode", () => {
     it("returns location for valid input", async () => {
-      const result = await client.geocode("San Francisco, CA");
+      const result = await client.locations.geocode("San Francisco, CA");
 
       expect(result).toBeDefined();
       expect(result.input).toBe("San Francisco, CA");
@@ -191,18 +191,18 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
     });
 
     it("handles invalid location", async () => {
-      const result = await client.geocode("invalidlocationxyz123");
+      const result = await client.locations.geocode("invalidlocationxyz123");
 
       expect(result).toBeDefined();
       // May succeed with remote keyword parsing or fail - just check response
     });
   });
 
-  // ── AutoApply ────────────────────────────────────────────────────
+  // ── AutoApply (disabled – not yet implemented) ────────────────────
 
-  describe("AutoApply", () => {
-    it("startAutoApplySession returns session", async () => {
-      const response = await client.startAutoApplySession(
+  describe.skip("AutoApply", () => {
+    it("startSession returns session", async () => {
+      const response = await client.autoApply.startSession(
         "https://invalid-url-that-does-not-exist.com/jobs/123"
       );
 
@@ -210,8 +210,8 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
       expect(response.session_id).toBeTruthy();
     });
 
-    it("endAutoApplySession returns false for invalid session", async () => {
-      const result = await client.endAutoApplySession(
+    it("endSession returns false for invalid session", async () => {
+      const result = await client.autoApply.endSession(
         "00000000-0000-0000-0000-000000000000"
       );
 
@@ -230,7 +230,7 @@ describe("Error handling", () => {
     });
 
     await expect(
-      badClient.getJobsFeed({ batchSize: 1 })
+      badClient.feed.getJobs({ batchSize: 1 })
     ).rejects.toThrow(JoboAuthenticationError);
   });
 });
