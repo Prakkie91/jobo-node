@@ -173,6 +173,51 @@ describeIf(!!API_KEY)("Jobo Enterprise Client – Integration Tests", () => {
       expect(Array.isArray(job.locations)).toBe(true);
     });
   });
+
+  // ── Geocoding ────────────────────────────────────────────────────
+
+  describe("geocode", () => {
+    it("returns location for valid input", async () => {
+      const result = await client.geocode("San Francisco, CA");
+
+      expect(result).toBeDefined();
+      expect(result.input).toBe("San Francisco, CA");
+      expect(result.succeeded).toBe(true);
+      expect(result.locations.length).toBeGreaterThan(0);
+      const location = result.locations[0];
+      expect(location.display_name).toBeTruthy();
+      expect(location.latitude).toBeDefined();
+      expect(location.longitude).toBeDefined();
+    });
+
+    it("handles invalid location", async () => {
+      const result = await client.geocode("invalidlocationxyz123");
+
+      expect(result).toBeDefined();
+      // May succeed with remote keyword parsing or fail - just check response
+    });
+  });
+
+  // ── AutoApply ────────────────────────────────────────────────────
+
+  describe("AutoApply", () => {
+    it("startAutoApplySession returns session", async () => {
+      const response = await client.startAutoApplySession(
+        "https://invalid-url-that-does-not-exist.com/jobs/123"
+      );
+
+      expect(response).toBeDefined();
+      expect(response.session_id).toBeTruthy();
+    });
+
+    it("endAutoApplySession returns false for invalid session", async () => {
+      const result = await client.endAutoApplySession(
+        "00000000-0000-0000-0000-000000000000"
+      );
+
+      expect(result).toBe(false);
+    });
+  });
 });
 
 // ── Error handling (always runs, no API key needed) ─────────────
